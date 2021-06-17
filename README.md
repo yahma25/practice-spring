@@ -114,6 +114,93 @@ JSON 타입의 데이터를 사용하기 위해선 Jackson-databind 같은 라�
 https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 
 <br>
+<br>
+
+# 키워드
+
+<br>
+
+## ORM(Object Relational Mapping)
+객체지향 프로그래밍 언어에서 관계형 데이터베이스의 데이터를 객체처럼 사용 할 수 있도록 매핑하여 이용 할 수 있는 기술
+
+비슷한 개념으로 매칭되는 대상
+* 클래스 : 테이블
+* 객체간의 관계 : 테이블간의 관계
+* 인스턴스 : 레코드(튜플)
+
+<br>
+
+## JPA(Java Persistence API)
+Java로 ORM을 사용 할 수 있는 스펙
+가장 유명한 프레임워크는 `Hibernate`, 스프링부트가 사용하고 있음.
+`Spring Data JPA`는 `Hibernate`를 쉽게 사용 할 수 있는 추가 API를 제공함.
+`Spring Data JPA <-> Hibernate <-> JDBC <-> DB`.
+
+<br>
+<br>
+
+# Anotaion
+
+<br>
+
+## RestAPI
+
+<br>
+
+### @RestController
+
+<br>
+<br>
+
+## DB 관련 (persistence)
+
+<br>
+
+### @Entity
+JPA로 관리되는 앤티티 객체이며, 엔티티를 위한 클래스라고 설정
+
+<br>
+
+### @Table(name = "테이블 이름")
+테이터베이스상에서 해당 클래스를 어떤 테이블로 생성할 것인지 설정
+
+<br>
+
+### @ToString
+### @Id
+기본키(Primary Key)가 되는 필드로 설정
+
+<br>
+
+### @GeneratedValue(strategy = GenerationType.IDENTITY)
+번호가 자동으로 생성되도록 설정.
+strategy: 키 생성 전략
+GenerationType
+* AUTO(default): JPA 구현체(Hibernate)가 생성 방식 결정
+* IDENTITY: 데이터베이스가 키 생성을 결정.  MySQL/MariaDB는 `auto increment`기능을 사용
+* SEQUENCE: 데이터베이스의 sequence 기능 사용. @SequnceGenerator와 같이 사용
+* TABLE: 키 생성 전용 테이블을 생성하여 키를 생성. @TableGenerator와 같이 사용
+
+<br>
+
+### @Column
+일반 컬럼으로 사용할 필드로 설정
+
+<br>
+<br>
+
+## Lombok
+
+<br>
+
+### @ToString
+### @Getter
+### @Builder
+### @AllArgsConstructor
+### @NoArgsConstructor
+
+<br>
+<br>
 
 # VS Code 사용 중 문제가 발생한 경우
 ## 캐시 비우기
