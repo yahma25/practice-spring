@@ -94,6 +94,26 @@ HikariPool은 스프링 부트가 기본적으로 이용하는 커넥션 풀(Con
 
 <br>
 
+### 프로젝트 실행과 동시에 DB 테이블 생성
+application.properties
+```
+# 프로젝트 실행 시 자동으로 DDL 생성 (ddl-auto type = create, update, create-drop, validate)
+# update: 변경이 필요한 경우 alter, 테이블이 없는 경우 create 동작
+spring.jpa.hibernate.ddl-auto=update
+
+# 실행되는 SQL을 포맷을 갖춘 상태로 출력
+spring.jpa.properties.hibernate.format_sql=true
+
+# JPA 처리할 때 SQL 출력 여부
+spring.jpa.show-sql=true
+```
+
+`@SpringBootApplication`로 설정된 main class에 Entity class가 모인 기본 패키지 경로 설정하기
+@EntityScan(basePackages = {"com.yahma.entity"}
+이 설정이 되어 있지 않으면 DB 테이블 생성 동작을 하지 않음
+
+<br>
+
 # 라이브러리
 build.gradle에 수동으로 추가 가능
 
@@ -140,6 +160,16 @@ Java로 ORM을 사용 할 수 있는 스펙
 <br>
 
 # Anotaion
+
+<br>
+
+## Spring
+
+<br>
+
+### @Autowired
+### @SpringBootTest
+### @Test
 
 <br>
 
