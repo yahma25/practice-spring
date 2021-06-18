@@ -198,6 +198,7 @@ GenerationType
 ### @Builder
 ### @AllArgsConstructor
 ### @NoArgsConstructor
+### Transient
 
 <br>
 <br>
