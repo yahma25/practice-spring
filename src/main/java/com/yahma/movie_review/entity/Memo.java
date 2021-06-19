@@ -1,4 +1,4 @@
-package com.yahma.entity;
+package com.yahma.movie_review.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
