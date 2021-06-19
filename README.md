@@ -159,6 +159,16 @@ Java로 ORM을 사용 할 수 있는 스펙
 <br>
 <br>
 
+# 기능
+
+<br>
+
+## Page, Pageable, Sort
+조회 결과를 특정 범위로 제한하고, 특정 조건으로 정렬하여 데이터 가져오기
+
+<br>
+<br>
+
 # Anotaion
 
 <br>
@@ -236,3 +246,7 @@ GenerationType
 # VS Code 사용 중 문제가 발생한 경우
 ## 캐시 비우기
 Ctrl + Shift + P - `Java: Clean Java Language Server Workspace` 실행
+
+## Lombok 기능을 인식하지 못할 때
+Lombok Annotations Support for VS Code 설치
+* https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok
