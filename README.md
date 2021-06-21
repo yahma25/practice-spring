@@ -169,6 +169,17 @@ Java로 ORM을 사용 할 수 있는 스펙
 <br>
 <br>
 
+## Query Method
+class method 이름을 인터페이스에 선언하는 것만으로도 SQL 처리를 할 수 있는 기능
+
+<br>
+
+### 종류
+https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.query.method.subject
+
+<br>
+<br>
+
 # Anotaion
 
 <br>
