@@ -1,5 +1,6 @@
 package com.yahma.movie_review.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -112,5 +114,27 @@ public class MemoRepositoryTests {
         result.get().forEach(memo -> {
             System.out.println(memo);
         });
+    }
+
+    @Test
+    public void testQueryMethods() {
+        List<Memo> list = memoRepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+        for (Memo mno : list) {
+            System.out.println(mno);
+        }
+    }
+
+    @Test
+    public void testQueryMethodWithPageable() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
+        Page<Memo> result = memoRepository.findByMnoBetween(10L, 50L, pageable);
+        result.get().forEach(memo -> System.out.println(memo));
+    }
+
+    @Commit // 커밋하지 않으면 실행 후 자동으로 롤백됨
+    @Transactional // 조회 후 삭제까지 한 번에 해야하므로 사용
+    @Test
+    public void testDeleteQueryMethods() {
+        memoRepository.deleteMemoByMnoLessThan(10L);
     }
 }
