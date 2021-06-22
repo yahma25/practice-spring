@@ -204,7 +204,10 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.que
 
 <br>
 
+### @Controller
 ### @RestController
+### @RequestMapping
+### @GetMapping
 
 <br>
 <br>
@@ -260,10 +263,18 @@ Select, Insert, Update, Delete 가능 (@Modifying 사용)
 
 ### @ToString
 ### @Getter
+### @Data
 ### @Builder
 ### @AllArgsConstructor
 ### @NoArgsConstructor
 ### Transient
+
+<br>
+<br>
+
+# Thymeleaf
+기본적으로 프로젝트 생성 시에 추가되는 templates 폴더를 기본 위치로 사용
+* main/resources/...
 
 <br>
 <br>
