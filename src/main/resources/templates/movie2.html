@@ -33,5 +33,10 @@
             th:class="${dto.sno % 5 == 0} ? 'target'">
         </li>
     </ul>
+    <ul>
+        <th:block th:each="dto : ${list}">
+            <li th:text="${dto.sno % 5 == 0} ? ${dto.sno} : ${dto.first}"></li>
+        </th:block>
+    </ul>
 </body>
 </html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화리뷰 링크</title>
+</head>
+<body>
+    <ul>
+        <li th:each="dto : ${list}">
+            <a th:href="@{/movie(sno=${dto.sno})}">[[${dto}]]</a>
+            <a th:href="@{/movie/{sno}(sno=${dto.sno})}">[[${dto.sno}]]</a>
+        </li>
+    </ul>
+</body>
+</html>
