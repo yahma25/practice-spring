@@ -238,6 +238,14 @@ GenerationType
 일반 컬럼으로 사용할 필드로 설정
 
 <br>
+
+### Query
+필요한 데이터만 추출
+순수 SQL(Native SQL) 사용 가능
+Select, Insert, Update, Delete 가능 (@Modifying 사용)
+@Entity 클래스의 멤버 변수 이용 가능
+
+<br>
 <br>
 
 ## Lombok
