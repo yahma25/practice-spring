@@ -143,9 +143,6 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 <br>
 
 # 키워드
-
-<br>
-
 ## ORM(Object Relational Mapping)
 객체지향 프로그래밍 언어에서 관계형 데이터베이스의 데이터를 객체처럼 사용 할 수 있도록 매핑하여 이용 할 수 있는 기술
 
@@ -166,9 +163,6 @@ Java로 ORM을 사용 할 수 있는 스펙
 <br>
 
 # 기능
-
-<br>
-
 ## Page, Pageable, Sort
 조회 결과를 특정 범위로 제한하고, 특정 조건으로 정렬하여 데이터 가져오기
 
@@ -187,9 +181,6 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.que
 <br>
 
 # Anotaion
-
-<br>
-
 ## Spring
 
 <br>
@@ -275,6 +266,58 @@ Select, Insert, Update, Delete 가능 (@Modifying 사용)
 # Thymeleaf
 기본적으로 프로젝트 생성 시에 추가되는 templates 폴더를 기본 위치로 사용
 * main/resources/...
+
+<br>
+
+## Format
+### 숫자 범위 지정하기
+```
+<ul>
+    <li th:each="dto : ${list}">
+        [[${#numbers.formatInteger(dto.sno, 5)}]]
+    </li>
+</ul>
+```
+
+### 날짜 포맷
+gradle에 `compile group 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'` 추가 필요
+```
+<ul>
+    <li th:each="dto : ${list}">
+        [[${dto.sno}]] --- [[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]
+    </li>
+</ul>
+```
+
+<br>
+
+## Layout
+### Fragment
+```
+<!--
+replace: 현재 element와 교체
+insert: 현재 element 자식에 추가
+'~{/fragments/fragment1 :: part1}': ~(시작 문법) + templates 폴더 하위에 준비 해놓은 html 경로 + '::'(부분만 가져오고 싶은 경우 사용) + key 이름
+-->
+<div th:replace="~{/fragments/fragment1 :: part1}"></div>
+<div th:insert="~{/fragments/fragment1 :: part2}"></div>
+<th:block th:replace="~{/fragments/fragment1 :: part3}"></th:block>
+```
+```
+<!--
+fragment.html
+fragment 키워드를 사용하여 외부에서 사용할 key 이름 지정
+-->
+<div th:fragment="part1">
+    <h2>Part 1</h2>
+</div>
+<div th:fragment="part2">
+    <h2>Part 2</h2>
+</div>
+<div th:fragment="part3">
+    <h2>Part 3</h2>
+</div>
+```
 
 <br>
 <br>
