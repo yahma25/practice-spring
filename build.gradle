@@ -34,6 +34,7 @@ dependencies {
     // thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    compile group 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time' // 날짜 포맷(ex. LocalDateTime)
 }
 
 test {
