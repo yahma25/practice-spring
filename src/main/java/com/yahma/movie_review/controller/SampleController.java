@@ -60,4 +60,9 @@ public class SampleController {
     public void movie3() {
         log.info("movie3");
     }
+
+    @GetMapping({"/layout/layout1", "/layout/layout2"})
+    public void movieLayout() {
+        log.info("movieLayout............");
+    }
 }
