@@ -25,7 +25,7 @@ public class SampleController {
         log.info("movie review ~ ~");
     }
 
-    @GetMapping({"/movie2", "/movieLink"})
+    @GetMapping({"/movie2", "/movieLink", "/movieFormat"})
     public void movie2(Model model) {
         List<SampleDTO> list = IntStream.rangeClosed(1, 10).asLongStream().mapToObj(i -> {
             SampleDTO dto = SampleDTO.builder()
@@ -59,5 +59,10 @@ public class SampleController {
     @GetMapping("/movie3")
     public void movie3() {
         log.info("movie3");
+    }
+
+    @GetMapping({"/layout/layout1", "/layout/layout2", "/template", "/sidebar"})
+    public void movieLayout() {
+        log.info("movieLayout............");
     }
 }

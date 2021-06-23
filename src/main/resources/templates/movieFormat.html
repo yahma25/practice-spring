@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 리뷰 Format</title>
+</head>
+<body>
+    <ul>
+        <li th:each="dto : ${list}">
+            [[${#numbers.formatInteger(dto.sno, 5)}]]
+        </li>
+    </ul>
+    <ul>
+        <li th:each="dto : ${list}">
+            [[${dto.sno}]] --- [[${#temporals.format(dto.regTime, 'yyyy/MM/dd')}]]
+        </li>
+    </ul>
+</body>
+</html>
