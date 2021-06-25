@@ -242,3 +242,10 @@ Ctrl + Shift + P - `Java: Clean Java Language Server Workspace` 실행
 ## Lombok 기능을 인식하지 못할 때
 Lombok Annotations Support for VS Code 설치
 * https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok
+
+## Querydsl 라이브러리 이용중 테스트코드 실패
+plugin > Java Test Runner
+`java.lang.ClassNotFoundException: xx.xxxx.xxxxxx.entity.Qxxx(gradle compileQuerydsl로 생성한 Q가 붙은 Entity class`
+위와 같은 오류 발생 시, 버전 교체(일반적으론 다운그레이드)
+0.29.0까지 정상 확인
+* https://pjs21s.github.io/querydsl-vscode/
