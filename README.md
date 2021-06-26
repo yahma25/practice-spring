@@ -243,9 +243,24 @@ Ctrl + Shift + P - `Java: Clean Java Language Server Workspace` 실행
 Lombok Annotations Support for VS Code 설치
 * https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok
 
-## Querydsl 라이브러리 이용중 테스트코드 실패
+## Querydsl
+
+### 라이브러리 이용중 테스트코드 실패
+
 plugin > Java Test Runner
-`java.lang.ClassNotFoundException: xx.xxxx.xxxxxx.entity.Qxxx(gradle compileQuerydsl로 생성한 Q가 붙은 Entity class`
-위와 같은 오류 발생 시, 버전 교체(일반적으론 다운그레이드) > VS Code 재실행
+오류 내용: `java.lang.ClassNotFoundException: xx.xxxx.xxxxxx.entity.Qxxx(gradle compileQuerydsl로 생성한 Q가 붙은 Entity class`
+해결법: 버전 교체(일반적으론 다운그레이드) > VS Code 재실행
 * 0.29.0까지 정상 확인
 * https://pjs21s.github.io/querydsl-vscode/
+
+### Application 실행 시 에러
+오류 내용: `java.lang.IllegalArgumentException: Did not find a query class`
+해결법: 프로젝트 폴더 > .classpath > querydsl의 값을 `main`으로 변경
+```
+	<classpathentry kind="src" output="bin/querydsl" path="build/generated/querydsl">
+		<attributes>
+			<attribute name="gradle_scope" value="main"/> <-- 변경
+			<attribute name="gradle_used_by_scope" value="main"/> <-- 변경
+		</attributes>
+	</classpathentry>
+```
