@@ -1,5 +1,6 @@
 package com.yahma.movie_review.service;
 
+import com.querydsl.core.BooleanBuilder;
 import com.yahma.movie_review.dto.GuestbookDTO;
 import com.yahma.movie_review.dto.PageRequestDTO;
 import com.yahma.movie_review.dto.PageResultDTO;
@@ -15,6 +16,8 @@ public interface GuestbookService {
     void remove(Long gno);
 
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
+
+    public BooleanBuilder getSearch(PageRequestDTO requestDTO);
 
     default Guestbook dtoToEntity(GuestbookDTO dto) {
         Guestbook entity = Guestbook.builder()
