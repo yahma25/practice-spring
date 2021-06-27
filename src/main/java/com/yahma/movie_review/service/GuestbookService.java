@@ -8,6 +8,12 @@ import com.yahma.movie_review.entity.Guestbook;
 public interface GuestbookService {
     Long register(GuestbookDTO dto);
 
+    GuestbookDTO read(Long gno);
+
+    void modify(GuestbookDTO dto);
+
+    void remove(Long gno);
+
     PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO requestDTO);
 
     default Guestbook dtoToEntity(GuestbookDTO dto) {
