@@ -232,6 +232,10 @@ fragment 키워드를 사용하여 외부에서 사용할 key 이름 지정
 </div>
 ```
 
+## Thymeleaf 오류가 발생하는 경우
+### parsing 관련
+`~`, `{}`, `::` 문법 토큰이 제대로 기입되었는지 확인하기.
+
 <br>
 <br>
 
@@ -264,3 +268,23 @@ plugin > Java Test Runner
 		</attributes>
 	</classpathentry>
 ```
+
+## Entity 클래스 설정 오류
+
+오류 내용:
+`GenerationTarget encountered exception accepting command : Error executing DDL`  
+`org.hibernate.tool.schema.spi.CommandAcceptanceException: Error executing DDL`  
+
+해결법:
+
+* 실제 해결된 케이스
+  * 오류 내용 사이에서 `Caused by: java.sql.SQLSyntaxErrorException: REFERENCES command denied to user 'movie_user'@'localhost' for table 'movie_review.board'` 찾음
+  * DB 툴에서 movie_user 계정에 REFERENCES 권한을 추가함
+
+* 이 외 알려진 케이스
+  * 클래스 멤버에 예약어가 있는지 확인
+  * 엔터티 설정중 @Column 어노테이션을 이용해서 컬럼 타입이나 기타 정보를 입력하지 않은 상태에서 실행하면 alert table 문장이 문법에 맞지 않은게 생성이 되서 오류
+  * alert table 문장이 문법에 맞지 않은게 생성이 되서 오류가 났다.
+  * spring.jpa.hibernate.ddl-auto 설정을 create로 변경후 
+  * 엔터티에 @Column 어노테이션으로 상세하게 정보를 기입후 
+  * 다시 spring.jpa.hibernate.ddl-auto 설정을 update로 변경하여 처리
