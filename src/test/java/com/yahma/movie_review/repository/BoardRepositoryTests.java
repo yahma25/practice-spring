@@ -3,6 +3,8 @@ package com.yahma.movie_review.repository;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+import javax.transaction.Transactional;
+
 import com.yahma.movie_review.entity.Board;
 import com.yahma.movie_review.entity.Member;
 
@@ -29,6 +31,7 @@ public class BoardRepositoryTests {
         });
     }
 
+    @Transactional
     @Test
     public void testRead1() {
         Optional<Board> result = boardRepository.findById(100L);
