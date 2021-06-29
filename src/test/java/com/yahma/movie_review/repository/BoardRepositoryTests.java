@@ -1,7 +1,6 @@
 package com.yahma.movie_review.repository;
 
-import static org.mockito.ArgumentMatchers.isNull;
-
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.yahma.movie_review.entity.Board;
@@ -28,5 +27,15 @@ public class BoardRepositoryTests {
                 .build();
             boardRepository.save(board);
         });
+    }
+
+    @Test
+    public void testRead1() {
+        Optional<Board> result = boardRepository.findById(100L);
+
+        Board board = result.get();
+
+        System.out.println(board);
+        System.out.println(board.getWriter());
     }
 }
