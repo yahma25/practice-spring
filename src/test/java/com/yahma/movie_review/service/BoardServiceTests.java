@@ -1,6 +1,8 @@
 package com.yahma.movie_review.service;
 
 import com.yahma.movie_review.dto.BoardDTO;
+import com.yahma.movie_review.dto.PageRequestDTO;
+import com.yahma.movie_review.dto.PageResultDTO;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +21,16 @@ public class BoardServiceTests {
                 .writerEmail("user75@aaa.com")
                 .build();
         Long bno = boardService.register(dto);
+    }
+
+    @Test
+    public void testList() {
+        PageRequestDTO pageRequestDTO = new PageRequestDTO();
+
+        PageResultDTO<BoardDTO, Object[]> result = boardService.getList(pageRequestDTO);
+
+        for (BoardDTO boardDTO : result.getDtoList()) {
+            System.out.println(boardDTO);
+        }
     }
 }
