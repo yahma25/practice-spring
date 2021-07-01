@@ -1,9 +1,16 @@
 package com.yahma.movie_review.service;
 
+import java.util.function.Function;
+
 import com.yahma.movie_review.dto.BoardDTO;
+import com.yahma.movie_review.dto.PageRequestDTO;
+import com.yahma.movie_review.dto.PageResultDTO;
 import com.yahma.movie_review.entity.Board;
+import com.yahma.movie_review.entity.Member;
 import com.yahma.movie_review.repository.BoardRepository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -24,5 +31,18 @@ public class BoardServiceImpl implements BoardService {
         repository.save(board);
 
         return board.getBno();
+    }
+
+    @Override
+    public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
+        log.info(pageRequestDTO);
+
+        Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board)en[0], (Member)en[1], (Long)en[2]));
+
+        Page<Object[]> result = repository.getBoardWithReplyCount(
+            pageRequestDTO.getPageable(Sort.by("bno").descending())
+        );
+
+        return new PageResultDTO<>(result, fn);
     }
 }
