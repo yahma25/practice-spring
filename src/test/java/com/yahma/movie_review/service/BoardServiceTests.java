@@ -42,4 +42,11 @@ public class BoardServiceTests {
 
         System.out.println(boardDTO);
     }
+
+    @Test
+    public void testRemove() {
+        Long bno = 2L;
+
+        boardService.removeWithReplies(bno);
+    }
 }
