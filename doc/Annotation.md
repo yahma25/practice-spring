@@ -91,10 +91,34 @@ Select, Insert, Update, Delete 가능 (@Modifying 사용)
 
 #### AuditingEntityListener
 
+```SpringBoot
+ex)
+@EntityListeners(value = { AuditingEntityListener.class })
+```
+
 JPA 내부에서 엔티티 객체가 생성/변경되는 것을 감지하는 역할.
 활성화시키기 위해 `@EnableJpaAuditing` 설정을 Application class에 추가해야 함.
 
 ### @EnableJpaAuditing
+
+@EntityListeners를 사용하기 위해 Application class에 설정.
+
+### @ManyToOne
+
+N:1 관계 설정. 작성 중인 class가 N, 대상이 되는 멤버가 1.
+
+```Java
+ex)
+public class Board {
+    @ManyToOne
+    private Member member;
+}
+```
+
+### @Transactional
+
+해당 메서드를 하나의 `트랜잭션`으로 처리  
+`FetchType.LAZY`으로 설정한 멤버가 pk로 있는 테이블 조인이 필요할 때 사용해야 함.
 
 <br>
 <br>
