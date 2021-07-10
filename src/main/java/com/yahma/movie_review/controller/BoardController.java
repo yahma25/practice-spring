@@ -1,12 +1,15 @@
 package com.yahma.movie_review.controller;
 
+import com.yahma.movie_review.dto.BoardDTO;
 import com.yahma.movie_review.dto.PageRequestDTO;
 import com.yahma.movie_review.service.BoardService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -23,5 +26,23 @@ public class BoardController {
         log.info("list....." + pageRequestDTO);
 
         model.addAttribute("result", boardService.getList(pageRequestDTO));
+    }
+
+    @GetMapping("/register")
+    public void register() {
+        log.info("register get..........");
+    }
+
+    @PostMapping("/register")
+    public String registerPost(BoardDTO dto, RedirectAttributes redirectAttributes) {
+        log.info("dto..." + dto);
+
+        Long bno = boardService.register(dto);
+
+        log.info("BNO: " + bno);
+
+        redirectAttributes.addFlashAttribute("msg", bno);
+
+        return "redirect:/board/list";
     }
 }
