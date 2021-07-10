@@ -24,7 +24,11 @@
 
 ### @Controller
 
+요청에 맞게 표현할 View를 반환
+
 ### @RestController
+
+API 요청에 따른 데이터를 반환
 
 ### @RequestMapping
 
