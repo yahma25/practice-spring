@@ -1,11 +1,13 @@
-# 이 저장소를 만든 이유
+# Spring Boot 학습용 저장소
+
+## 이 저장소를 만든 이유
 
 최신 백엔드 트렌드 살펴보기.  
 팀에서 프론트엔드 역할을 맡고 있다보니 백엔드 업무를 할 일은 없었지만, 백엔드에서 하는 일을 살펴보면서 웹 지식의 폭을 넓혀본다.
 
 <br>
 
-# 내 것으로 만들어야 할 것
+## 무엇을 배워볼까?
 * 스프링부트 프로젝트 만드는 방법
 * Spring Data JPA
 * 스프링 MVC
@@ -15,26 +17,26 @@
 
 <br>
 
-# 포스팅 전까지 기록
+## 포스팅 전까지 기록
 
-## 스프링부트를 사용하는 이유?
+### 스프링부트를 사용하는 이유?
 스프링 프레임워크의 모든 기능을 활용하여 빠르게 개발하기 위함
 
 <br>
 
-## 프로젝트 환경 설정
+### 프로젝트 환경 설정
 IDE
 * VS CODE
 
 초기 설정에 사용하는 plugin
 * Spring Initializr Java Support
 
-### Plugin list
+#### Plugin list
 * Spring Boot Tools
   * 편집 창에서 프로그램을 빠르게 실행시킬 수 있음
   * application.properties 자동 완성
 
-### Spring Data JPA 설치 후 서버 실행 시 에러
+#### Spring Data JPA 설치 후 서버 실행 시 에러
 콘솔 로그 내용
 ```
 Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
@@ -96,7 +98,7 @@ HikariPool은 스프링 부트가 기본적으로 이용하는 커넥션 풀(Con
 
 <br>
 
-### 프로젝트 실행과 동시에 DB 테이블 생성
+#### 프로젝트 실행과 동시에 DB 테이블 생성
 application.properties
 ```
 # 프로젝트 실행 시 자동으로 DDL 생성 (ddl-auto type = create, update, create-drop, validate)
@@ -116,7 +118,7 @@ spring.jpa.show-sql=true
 
 <br>
 
-# 라이브러리
+## 라이브러리
 build.gradle에 수동으로 추가 가능
 
 <br>
@@ -125,9 +127,9 @@ Spring Data JPA - implementation 'org.springframework.boot:spring-boot-starter-d
 
 <br>
 
-## 기타
+### 기타
 
-### JSON
+#### JSON
 JSON 타입의 데이터를 사용하기 위해선 Jackson-databind 같은 라이브러리가 필요한데 Spring Web 의존성을 추가하면 자동으로 추가되므로 별도의 설치가 필요없음
 
 <br>
@@ -138,8 +140,8 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 <br>
 <br>
 
-# 키워드
-## ORM(Object Relational Mapping)
+## 키워드
+### ORM(Object Relational Mapping)
 객체지향 프로그래밍 언어에서 관계형 데이터베이스의 데이터를 객체처럼 사용 할 수 있도록 매핑하여 이용 할 수 있는 기술
 
 비슷한 개념으로 매칭되는 대상
@@ -149,7 +151,7 @@ https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/
 
 <br>
 
-## JPA(Java Persistence API)
+### JPA(Java Persistence API)
 Java로 ORM을 사용 할 수 있는 스펙
 가장 유명한 프레임워크는 `Hibernate`, 스프링부트가 사용하고 있음.
 `Spring Data JPA`는 `Hibernate`를 쉽게 사용 할 수 있는 추가 API를 제공함.
@@ -158,32 +160,32 @@ Java로 ORM을 사용 할 수 있는 스펙
 <br>
 <br>
 
-# 기능
-## Page, Pageable, Sort
+## 기능
+### Page, Pageable, Sort
 조회 결과를 특정 범위로 제한하고, 특정 조건으로 정렬하여 데이터 가져오기
 
 <br>
 <br>
 
-## Query Method
+### Query Method
 class method 이름을 인터페이스에 선언하는 것만으로도 SQL 처리를 할 수 있는 기능
 
 <br>
 
-### 종류
+#### 종류
 https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.query.method.subject
 
 <br>
 <br>
 
-# Thymeleaf
+## Thymeleaf
 기본적으로 프로젝트 생성 시에 추가되는 templates 폴더를 기본 위치로 사용
 * main/resources/...
 
 <br>
 
-## Format
-### 숫자 범위 지정하기
+### Format
+#### 숫자 범위 지정하기
 ```
 <ul>
     <li th:each="dto : ${list}">
@@ -192,7 +194,7 @@ https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.que
 </ul>
 ```
 
-### 날짜 포맷
+#### 날짜 포맷
 gradle에 `compile group 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8time'` 추가 필요
 ```
 <ul>
@@ -204,8 +206,8 @@ gradle에 `compile group 'org.thymeleaf.extras', name: 'thymeleaf-extras-java8ti
 
 <br>
 
-## Layout
-### Fragment
+### Layout
+#### Fragment
 ```
 <!--
 replace: 현재 element와 교체
@@ -232,24 +234,24 @@ fragment 키워드를 사용하여 외부에서 사용할 key 이름 지정
 </div>
 ```
 
-## Thymeleaf 오류가 발생하는 경우
-### parsing 관련
+### Thymeleaf 오류가 발생하는 경우
+#### parsing 관련
 `~`, `{}`, `::` 문법 토큰이 제대로 기입되었는지 확인하기.
 
 <br>
 <br>
 
-# VS Code 사용 중 문제가 발생한 경우
-## 캐시 비우기
+## VS Code 사용 중 문제가 발생한 경우
+### 캐시 비우기
 Ctrl + Shift + P - `Java: Clean Java Language Server Workspace` 실행
 
-## Lombok 기능을 인식하지 못할 때
+### Lombok 기능을 인식하지 못할 때
 Lombok Annotations Support for VS Code 설치
 * https://marketplace.visualstudio.com/items?itemName=GabrielBB.vscode-lombok
 
-## Querydsl
+### Querydsl
 
-### 라이브러리 이용중 테스트코드 실패
+#### 라이브러리 이용중 테스트코드 실패
 
 plugin > Java Test Runner
 오류 내용: `java.lang.ClassNotFoundException: xx.xxxx.xxxxxx.entity.Qxxx(gradle compileQuerydsl로 생성한 Q가 붙은 Entity class`
@@ -257,7 +259,7 @@ plugin > Java Test Runner
 * 0.29.0까지 정상 확인
 * https://pjs21s.github.io/querydsl-vscode/
 
-### Application 실행 시 에러
+#### Application 실행 시 에러
 오류 내용: `java.lang.IllegalArgumentException: Did not find a query class`
 해결법: 프로젝트 폴더 > .classpath > querydsl의 값을 `main`으로 변경
 ```
@@ -269,7 +271,7 @@ plugin > Java Test Runner
 	</classpathentry>
 ```
 
-## Entity 클래스 설정 오류
+### Entity 클래스 설정 오류
 
 오류 내용:
 `GenerationTarget encountered exception accepting command : Error executing DDL`  
