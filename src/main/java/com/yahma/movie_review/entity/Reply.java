@@ -2,6 +2,7 @@ package com.yahma.movie_review.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ import lombok.ToString;
 @ToString(exclude = "board")
 @Table(name = "reply")
 public class Reply extends BaseEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
@@ -33,6 +34,6 @@ public class Reply extends BaseEntity {
     @Column(length = 20, nullable = false)
     private String replier;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Board board;
 }

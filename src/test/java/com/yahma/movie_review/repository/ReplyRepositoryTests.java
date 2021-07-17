@@ -1,43 +1,57 @@
 package com.yahma.movie_review.repository;
 
-import java.util.Optional;
-import java.util.stream.IntStream;
-
 import com.yahma.movie_review.entity.Board;
 import com.yahma.movie_review.entity.Reply;
-
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class ReplyRepositoryTests {
-    @Autowired
-    private ReplyRepository replyRepository;
 
-    @Test
-    public void insertReply() {
-        IntStream.rangeClosed(1, 300).forEach(i -> {
-            long bno = (long)(Math.random() * 100) + 1;
+  @Autowired
+  private ReplyRepository replyRepository;
 
-            Board board = Board.builder().bno(bno).build();
+  @Test
+  public void insertReply() {
+    IntStream
+      .rangeClosed(1, 300)
+      .forEach(
+        i -> {
+          long bno = (long) (Math.random() * 100) + 1;
 
-            Reply reply = Reply.builder()
-                .text("Reply..." + i)
-                .board(board)
-                .replier("guest")
-                .build();
-            replyRepository.save(reply);
-        });
-    }
+          Board board = Board.builder().bno(bno).build();
 
-    @Test
-    public void readReply1() {
-        Optional<Reply> result = replyRepository.findById(1L);
+          Reply reply = Reply
+            .builder()
+            .text("Reply..." + i)
+            .board(board)
+            .replier("guest")
+            .build();
+          replyRepository.save(reply);
+        }
+      );
+  }
 
-        Reply reply = result.get();
+  @Test
+  public void readReply1() {
+    Optional<Reply> result = replyRepository.findById(1L);
 
-        System.out.println(reply);
-        System.out.println(reply.getBoard());
-    }
+    Reply reply = result.get();
+
+    System.out.println(reply);
+    System.out.println(reply.getBoard());
+  }
+
+  @Test
+  public void testListByBoard() {
+    List<Reply> replyList = replyRepository.getRepliesByBoardOrderByRno(
+      Board.builder().bno(76L).build()
+    );
+
+    replyList.forEach(reply -> System.out.println(reply));
+  }
 }
