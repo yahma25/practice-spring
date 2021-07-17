@@ -1,14 +1,12 @@
 package com.yahma.movie_review.dto;
 
 import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @ToString
@@ -16,22 +14,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BoardDTO {
-    private Long bno;
-    
-    private String title;
 
-    private String content;
+  private Long bno;
 
-    private String writerEmail;
+  private String title;
 
-    private String writerName;
+  private String content;
 
-    // html에서 사용하는 형식과 같아야 String -> LocalDateTime 변환됨
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime regDate;
+  private String writerEmail;
 
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime modDate;
+  private String writerName;
 
-    private int replyCount;
+  // html에서 사용하는 형식과 같아야 String -> LocalDateTime 변환됨
+  @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+  private LocalDateTime regDate;
+
+  @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+  private LocalDateTime modDate;
+
+  private int replyCount;
 }
