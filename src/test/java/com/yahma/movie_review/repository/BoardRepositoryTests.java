@@ -28,11 +28,7 @@ public class BoardRepositoryTests {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Member member = Member.builder().email("user" + i + "@aaa.com").build();
 
-            Board board = Board.builder()
-                .title("Title.." + i)
-                .content("Content.." + i)
-                .writer(member)
-                .build();
+            Board board = Board.builder().title("Title.." + i).content("Content.." + i).writer(member).build();
             boardRepository.save(board);
         });
     }
@@ -52,7 +48,7 @@ public class BoardRepositoryTests {
     public void testReadWithWriter() {
         Object result = boardRepository.getBoardWithWriter(100L);
 
-        Object[] arr = (Object[])result;
+        Object[] arr = (Object[]) result;
 
         System.out.println(Arrays.toString(arr));
     }
@@ -73,7 +69,7 @@ public class BoardRepositoryTests {
         Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
 
         result.get().forEach(row -> {
-            Object[] arr = (Object[])row;
+            Object[] arr = (Object[]) row;
             System.out.println(Arrays.toString(arr));
         });
     }
@@ -82,8 +78,20 @@ public class BoardRepositoryTests {
     public void testRead3() {
         Object result = boardRepository.getBoardByBno(76L);
 
-        Object[] arr = (Object[])result;
+        Object[] arr = (Object[]) result;
 
         System.out.println(Arrays.toString(arr));
+    }
+
+    @Test
+    public void testSearch1() {
+        boardRepository.search1();
+    }
+
+    @Test
+    public void testSearchPage() {
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending().and(Sort.by("title").ascending()));
+
+        Page<Object[]> result = boardRepository.searchPage("t", "1", pageable);
     }
 }
