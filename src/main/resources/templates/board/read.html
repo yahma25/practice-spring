@@ -135,6 +135,32 @@
                     $('.modal-footer .btn').hide();
                     $('.replySave, replyClose').show();
                 });
+
+                $('.replySave').click(() => {
+                    var reply = {
+                        bno,
+                        text: $('input[name="replyText"]').val(),
+                        replier: $('input[name="replier"]').val()
+                    };
+                    console.log('댓글 저장', reply);
+
+                    $.ajax({
+                        url: '/replies/',
+                        method: 'post',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: (data) => {
+                            console.log('댓글 저장 성공', data);
+
+                            var newRno = parseInt(data);
+
+                            alert(`${newRno}번 댓글이 등록되었습니다.`);
+                            modal.modal('hide');
+                            loadJSONData();
+                        }
+                    });
+                });
             });
         </script>
 
