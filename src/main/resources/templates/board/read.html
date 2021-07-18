@@ -42,6 +42,194 @@
         <a th:href="@{/board/list(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
             <button type="button" class="btn btn-primary">List</button>
         </a>
+
+        <div class="mt-4">
+            <h5><span class="badge badge-info addReply">Add Reply</span></h5>
+            <h5><span class="badge badge-secondary replyCount">Reply Count [[${dto.replyCount}]]</span></h5>
+        </div>
+        <div class="list-group replyList">
+
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="replyText" placeholder="Reply Text...">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="replier" placeholder="Replier">
+                            <input type="hidden" name="rno">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger replyRemove">Remove</button>
+                        <button type="button" class="btn btn-warning replyModify">Modify</button>
+                        <button type="button" class="btn btn-primary replySave">Save</button>
+                        <button type="button" class="btn btn-outline-secondary replyClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:inline="javascript">
+            $(document).ready(() => {
+                var bno = [[${dto.bno}]];
+
+                var listGroup = $(".replyList");
+
+                $(".replyCount").click(() => {
+                    $.getJSON('/replies/board/' + bno, () => {
+                        loadJSONData();
+                    });
+                });
+
+                // 댓글 영역
+                var listGroup = $(".replyList");
+
+                function formatTime(str) {
+                    var date = new Date(str);
+
+                    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+                }
+
+                function loadJSONData() {
+                    $.getJSON('/replies/board/' + bno, (arr) => {
+                        console.log(arr);
+
+                        var str = '';
+
+                        $('.replyCount').html(' Reply Count ' + arr.length);
+
+                        // 댓글이 있었다가 삭제되었는데 개수가 0일 경우, 아래 each 동작을 하지 않으니 항상 비워두게 함
+                        listGroup.html('');
+
+                        $.each(arr, (idx, reply) => {
+                            console.log(reply);
+
+                            str += `<div class='card-body' data-rno='${reply.rno}'><b>${reply.rno}</b>`;
+                            str += `<h5 class='card-title'>${reply.text}</h5>`;
+                            str += `<h6 class='card-subtitle mb-2 text=muted'>${reply.replier}</h6>`;
+                            str += `<p class='card-text'>${formatTime(reply.regDate)}</p>`;
+                            str += '</div>';
+
+                            listGroup.html(str);
+                        });
+                    });
+                }
+
+                var modal = $('.modal');
+
+                $('.addReply').click(() => {
+                    modal.modal('show');
+
+                    // 내용 초기화
+                    $('.input[name="replyText"]').val('');
+                    $('.input[name="replier"]').val('');
+
+                    // 모든 버튼 숨김 후 필요한 버튼만 보이기
+                    $('.modal-footer .btn').hide();
+                    $('.replySave, replyClose').show();
+                });
+
+                $('.replySave').click(() => {
+                    var reply = {
+                        bno,
+                        text: $('input[name="replyText"]').val(),
+                        replier: $('input[name="replier"]').val()
+                    };
+                    console.log('댓글 저장', reply);
+
+                    $.ajax({
+                        url: '/replies/',
+                        method: 'post',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: (data) => {
+                            console.log('댓글 저장 성공', data);
+
+                            var newRno = parseInt(data);
+
+                            alert(`${newRno}번 댓글이 등록되었습니다.`);
+                            modal.modal('hide');
+                            loadJSONData();
+                        }
+                    });
+                });
+
+                $('.replyList').on('click', '.card-body', function () {
+                    var rno = $(this).data('rno');
+
+                    console.log('rno', rno, ', this', this);
+
+                    console.log($(this).find('.card-title').html());
+
+                    $('input[name="replyText"]').val($(this).find('.card-title').html());
+                    $('input[name="replier"]').val($(this).find('.card-subtitle').html());
+                    $('input[name="rno"]').val(rno);
+
+                    $('.modal-footer .btn').hide();
+                    $('.replyRemove, .replyModify, .replyClose').show();
+
+                    modal.modal('show');
+                });
+
+                $('.replyModify').on('click', function () {
+                    var rno = $('input[name="rno"]').val();
+
+                    var reply = {
+                        rno,
+                        bno,
+                        text: $('input[name="replyText"]').val(),
+                        replier: $('input[name="replier"]').val(),
+                    };
+
+                    console.log(reply);
+
+                    $.ajax({
+                        url: `/replies/${rno}`,
+                        method: 'put',
+                        data: JSON.stringify(reply),
+                        contentType: 'application/json; charset=utf-8',
+                        success: (result) => {
+                            console.log('댓글 수정 성공', result);
+
+                            if (result === 'success') {
+                                alert('댓글이 수정되었습니다.');
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    });
+                });
+
+                $('.replyRemove').on('click', function () {
+                    var rno = $('input[name="rno"]').val(); // input name=rno는 hidden 상태
+
+                    $.ajax({
+                        url: `/replies/${rno}`,
+                        method: 'delete',
+                        success: (result) => {
+                            console.log(`result: ${result}`);
+                            if (result === 'success') {
+                                alert('댓글이 삭제되었습니다.');
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
     </th:block>
 </th:block>
 

@@ -35,6 +35,12 @@ API 요청에 따른 데이터를 반환
 ### @GetMapping
 
 <br>
+
+### @RequestBody
+
+JSON으로 들어오는 데이터를 자동으로 해당 타입의 객체로 매핑
+
+<br>
 <br>
 
 ## DB 관련 (persistence)
