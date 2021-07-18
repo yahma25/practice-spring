@@ -44,10 +44,39 @@
         </a>
 
         <div class="mt-4">
+            <h5><span class="badge badge-info addReply">Add Reply</span></h5>
             <h5><span class="badge badge-secondary replyCount">Reply Count [[${dto.replyCount}]]</span></h5>
         </div>
         <div class="list-group replyList">
 
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="replyText" placeholder="Reply Text...">
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="replier" placeholder="Replier">
+                            <input type="hidden" name="rno">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger replyRemove">Remove</button>
+                        <button type="button" class="btn btn-warning replyModify">Modify</button>
+                        <button type="button" class="btn btn-primary replySave">Save</button>
+                        <button type="button" class="btn btn-outline-secondary replyClose">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script th:inline="javascript">
@@ -92,6 +121,20 @@
                         });
                     });
                 }
+
+                var modal = $('.modal');
+
+                $('.addReply').click(() => {
+                    modal.modal('show');
+
+                    // 내용 초기화
+                    $('.input[name="replyText"]').val('');
+                    $('.input[name="replier"]').val('');
+
+                    // 모든 버튼 숨김 후 필요한 버튼만 보이기
+                    $('.modal-footer .btn').hide();
+                    $('.replySave, replyClose').show();
+                });
             });
         </script>
 
