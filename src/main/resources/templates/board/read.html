@@ -111,7 +111,7 @@
                         $.each(arr, (idx, reply) => {
                             console.log(reply);
 
-                            str += `<div class='card-body' date-rno='${reply.rno}'><b>${reply.rno}</b>`;
+                            str += `<div class='card-body' data-rno='${reply.rno}'><b>${reply.rno}</b>`;
                             str += `<h5 class='card-title'>${reply.text}</h5>`;
                             str += `<h6 class='card-subtitle mb-2 text=muted'>${reply.replier}</h6>`;
                             str += `<p class='card-text'>${formatTime(reply.regDate)}</p>`;
@@ -161,6 +161,23 @@
                         }
                     });
                 });
+
+                $('.replyList').on('click', '.card-body', function () {
+                    var rno = $(this).data('rno');
+
+                    console.log('rno', rno, ', this', this);
+
+                    console.log($(this).find('.card-title').html());
+
+                    $('input[name="replyText"]').val($(this).find('.card-title').html());
+                    $('input[name="replier"]').val($(this).find('.card-subtitle').html());
+                    $('input[name="rno"]').val(rno);
+
+                    $('.modal-footer .btn').hide();
+                    $('.replyRemove, .replyModify, .replyClose').show();
+
+                    modal.modal('show');
+                })
             });
         </script>
 
