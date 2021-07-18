@@ -108,6 +108,9 @@
 
                         $('.replyCount').html(' Reply Count ' + arr.length);
 
+                        // 댓글이 있었다가 삭제되었는데 개수가 0일 경우, 아래 each 동작을 하지 않으니 항상 비워두게 함
+                        listGroup.html('');
+
                         $.each(arr, (idx, reply) => {
                             console.log(reply);
 
@@ -177,7 +180,24 @@
                     $('.replyRemove, .replyModify, .replyClose').show();
 
                     modal.modal('show');
-                })
+                });
+
+                $('.replyRemove').on('click', function () {
+                    var rno = $('input[name="rno"]').val(); // input name=rno는 hidden 상태
+
+                    $.ajax({
+                        url: `/replies/${rno}`,
+                        method: 'delete',
+                        success: (result) => {
+                            console.log(`result: ${result}`);
+                            if (result === 'success') {
+                                alert('댓글이 삭제되었습니다.');
+                                modal.modal('hide');
+                                loadJSONData();
+                            }
+                        }
+                    });
+                });
             });
         </script>
 
