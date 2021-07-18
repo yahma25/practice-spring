@@ -42,6 +42,59 @@
         <a th:href="@{/board/list(page=${requestDTO.page}, type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
             <button type="button" class="btn btn-primary">List</button>
         </a>
+
+        <div class="mt-4">
+            <h5><span class="badge badge-secondary replyCount">Reply Count [[${dto.replyCount}]]</span></h5>
+        </div>
+        <div class="list-group replyList">
+
+        </div>
+
+        <script th:inline="javascript">
+            $(document).ready(() => {
+                var bno = [[${dto.bno}]];
+
+                var listGroup = $(".replyList");
+
+                $(".replyCount").click(() => {
+                    $.getJSON('/replies/board/' + bno, () => {
+                        loadJSONData();
+                    });
+                });
+
+                // 댓글 영역
+                var listGroup = $(".replyList");
+
+                function formatTime(str) {
+                    var date = new Date(str);
+
+                    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+                }
+
+                function loadJSONData() {
+                    $.getJSON('/replies/board/' + bno, (arr) => {
+                        console.log(arr);
+
+                        var str = '';
+
+                        $('.replyCount').html(' Reply Count ' + arr.length);
+
+                        $.each(arr, (idx, reply) => {
+                            console.log(reply);
+
+                            str += `<div class='card-body' date-rno='${reply.rno}'><b>${reply.rno}</b>`;
+                            str += `<h5 class='card-title'>${reply.text}</h5>`;
+                            str += `<h6 class='card-subtitle mb-2 text=muted'>${reply.replier}</h6>`;
+                            str += `<p class='card-text'>${formatTime(reply.regDate)}</p>`;
+                            str += '</div>';
+
+                            listGroup.html(str);
+                        });
+                    });
+                }
+            });
+        </script>
+
     </th:block>
 </th:block>
 
