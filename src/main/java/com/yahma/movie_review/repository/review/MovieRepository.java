@@ -1,6 +1,6 @@
-package com.yahma.movie_review.repository;
+package com.yahma.movie_review.repository.review;
 
-import com.yahma.movie_review.entity.Movie;
+import com.yahma.movie_review.entity.review.Movie;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,10 +1,10 @@
-package com.yahma.movie_review.repository;
+package com.yahma.movie_review.repository.review;
 
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-import com.yahma.movie_review.entity.Movie;
-import com.yahma.movie_review.entity.MovieImage;
+import com.yahma.movie_review.entity.review.Movie;
+import com.yahma.movie_review.entity.review.MovieImage;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
