@@ -1,14 +1,19 @@
-package com.yahma.movie_review.repository;
+package com.yahma.movie_review.repository.review;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-import com.yahma.movie_review.entity.Movie;
-import com.yahma.movie_review.entity.MovieImage;
+import com.yahma.movie_review.entity.review.Movie;
+import com.yahma.movie_review.entity.review.MovieImage;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,5 +49,26 @@ public class MovieRepositoryTests {
                 imageRepository.save(movieImage);
             }
         });
+    }
+
+    @Test
+    public void testListPage() {
+
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "mno"));
+
+        Page<Object[]> result = movieRepository.getListPage(pageRequest);
+
+        for (Object[] objects : result.getContent()) {
+            System.out.println(Arrays.toString(objects));
+        }
+    }
+
+    @Test
+    public void testGetMovieWithAll() {
+        List<Object[]> result = movieRepository.getMovieWithAll(1L);
+
+        for (Object[] arr : result) {
+            System.out.println(Arrays.toString(arr));
+        }
     }
 }

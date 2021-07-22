@@ -1,4 +1,4 @@
-package com.yahma.movie_review.entity;
+package com.yahma.movie_review.entity.review;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

@@ -6,6 +6,8 @@
 
 ### @Autowired
 
+빈 인스턴스 생성 후 인스턴스 주입, Bean을 자동으로 매핑해줌
+
 ### @SpringBootTest
 
 ### @Test
@@ -129,6 +131,24 @@ public class Board {
 
 해당 메서드를 하나의 `트랜잭션`으로 처리  
 `FetchType.LAZY`으로 설정한 멤버가 pk로 있는 테이블 조인이 필요할 때 사용해야 함.
+
+<br>
+
+### @Param
+
+`@Query`에 사용하는 `:변수이름`에 연결하는 파라미터 지정
+
+```java
+@Query("delete from Reply r where r.board.bno =:bno")
+void deleteByBno(@Param("bno") Long bno);
+```
+
+<br>
+
+### @EntityGraph
+
+엔티티의 특정한 속성을 같이 로딩하도록 표시
+ex) fetch = FetchType.LAZY 같은 속성을 가진 경우
 
 <br>
 <br>
