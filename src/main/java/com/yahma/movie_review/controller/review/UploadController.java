@@ -2,6 +2,8 @@ package com.yahma.movie_review.controller.review;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -13,9 +15,13 @@ import java.util.UUID;
 import com.yahma.movie_review.dto.review.UploadResultDTO;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,13 +34,16 @@ public class UploadController {
     @Value("${com.yahma.movie_review.upload.path}") // application.properties 업로드 경로 변수
     private String uploadPath;
     
+    /**
+     * 파일 업로드
+     * - 요청하는 쪽에서 파라미터 key 이름과 동일하게 @RequestParam("파라미터 키 이름") 설정 필요
+     */
     @PostMapping("/uploadAjax")
-    public ResponseEntity uploadFile(MultipartFile[] uploadFiles) {
+    public ResponseEntity<List<UploadResultDTO>> uploadFile(@RequestParam("uploadFiles") MultipartFile[] uploadFiles) {
         
         List<UploadResultDTO> resultDTOList = new ArrayList<>();
 
         for (MultipartFile uploadFile : uploadFiles) {
-
             
             // 이미지 파일만 업로드 가능
             if (!uploadFile.getContentType().startsWith("image")) {
@@ -61,13 +70,13 @@ public class UploadController {
 
             try {
                 uploadFile.transferTo(savePath);
-                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath))
+                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
+        return new ResponseEntity<List<UploadResultDTO>>(resultDTOList, HttpStatus.OK);
     }
 
     private String makeFolder() {
