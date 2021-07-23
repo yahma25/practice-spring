@@ -10,9 +10,15 @@ import com.yahma.movie_review.entity.review.Review;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 public class ReviewRepositoryTests {
+
+    @Autowired
+    private MemberForReviewRepository memberForReviewRepository;
+
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -56,5 +62,22 @@ public class ReviewRepositoryTests {
             System.out.println("\t" + movieReview.getMemberForReview().getEmail());
             System.out.println("---------------------------");
         });
+    }
+
+    @Test
+    @Commit
+    @Transactional
+    public void testDeleteMemberForReview() {
+
+        Long mid = 300L;
+
+        MemberForReview memberForReview = MemberForReview.builder().mid(mid).build();
+
+        // FK, 순서 문제로 오류 발생
+        // memberForReviewRepository.deleteById(mid);
+        // reviewRepository.deleteByMemberForReview(memberForReview);
+
+        reviewRepository.deleteByMemberForReview(memberForReview);
+        memberForReviewRepository.deleteById(mid);
     }
 }

@@ -2,6 +2,7 @@ package com.yahma.movie_review.repository.review;
 
 import java.util.List;
 
+import com.yahma.movie_review.entity.review.MemberForReview;
 import com.yahma.movie_review.entity.review.Movie;
 import com.yahma.movie_review.entity.review.Review;
 
@@ -16,4 +17,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
      */
     @EntityGraph(attributePaths = {"memberForReview"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Review> findByMovie(Movie movie);
+
+
+    void deleteByMemberForReview(MemberForReview memberForReview);
 }
