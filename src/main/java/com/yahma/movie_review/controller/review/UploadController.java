@@ -6,9 +6,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+import com.yahma.movie_review.dto.review.UploadResultDTO;
+
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,13 +29,17 @@ public class UploadController {
     private String uploadPath;
     
     @PostMapping("/uploadAjax")
-    public void uploadFile(MultipartFile[] uploadFiles) {
+    public ResponseEntity uploadFile(MultipartFile[] uploadFiles) {
+        
+        List<UploadResultDTO> resultDTOList = new ArrayList<>();
+
         for (MultipartFile uploadFile : uploadFiles) {
+
             
             // 이미지 파일만 업로드 가능
             if (!uploadFile.getContentType().startsWith("image")) {
                 log.info("This file is not image type");
-                return;
+                return new ResponseEntity<>(HttpStatus.FORBIDDEN);
             }
             
             // 파일 원본 이름. IE/Edge는 전체 경로가 들어옴
@@ -51,10 +61,13 @@ public class UploadController {
 
             try {
                 uploadFile.transferTo(savePath);
+                resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath))
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
+        return new ResponseEntity<>(resultDTOList, HttpStatus.OK);
     }
 
     private String makeFolder() {
