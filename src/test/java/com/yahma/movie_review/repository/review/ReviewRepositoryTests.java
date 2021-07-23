@@ -69,7 +69,7 @@ public class ReviewRepositoryTests {
     @Transactional
     public void testDeleteMemberForReview() {
 
-        Long mid = 300L;
+        Long mid = 299L;
 
         MemberForReview memberForReview = MemberForReview.builder().mid(mid).build();
 

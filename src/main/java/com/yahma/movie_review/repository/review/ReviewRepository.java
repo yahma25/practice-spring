@@ -8,6 +8,9 @@ import com.yahma.movie_review.entity.review.Review;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     
@@ -18,6 +21,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @EntityGraph(attributePaths = {"memberForReview"}, type = EntityGraph.EntityGraphType.FETCH)
     List<Review> findByMovie(Movie movie);
 
-
-    void deleteByMemberForReview(MemberForReview memberForReview);
+    // 효율적으로 제거하기 위해 Query 사용. update/delete 사용 시 @Modifying 사용
+    @Modifying
+    @Query("delete from Review mr where mr.memberForReview = :memberForReview")
+    void deleteByMemberForReview(@Param("memberForReview") MemberForReview memberForReview);
 }
