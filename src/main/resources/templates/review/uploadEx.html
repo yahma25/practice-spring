@@ -8,6 +8,8 @@
     <input name="uploadFiles" type="file" multiple />
     <button class="uploadBtn">Upload</button>
 
+    <div class="uploadResult"></div>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -33,13 +35,24 @@
           type: "POST",
           dataType: "json",
           success: function (result) {
-            console.log(result);
+            console.log("응답 성공", result);
+            showUploadedImages(result);
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
           },
         });
       });
+
+      function showUploadedImages(images) {
+        console.log(images);
+
+        const divArea = $(".uploadResult");
+
+        for (const img of images) {
+          divArea.append(`<img src='/display?fileName=${img.imageURL}'>`);
+        }
+      }
     </script>
   </body>
 </html>
