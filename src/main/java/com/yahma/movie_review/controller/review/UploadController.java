@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 
 @RestController
 @Log4j2
@@ -69,7 +70,17 @@ public class UploadController {
             log.info("savePath: " + savePath);
 
             try {
+                // 원본 저장
                 uploadFile.transferTo(savePath);
+
+                // 썸네일 생성
+                String thumbnailSaveName = uploadPath + File.separator 
+                                        + folderPath + File.separator + "s_" + uuid + "_" + fileName;
+
+                File thumbnailFile = new File(thumbnailSaveName);
+
+                Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 100, 100);
+
                 resultDTOList.add(new UploadResultDTO(fileName, uuid, folderPath));
             } catch (IOException e) {
                 e.printStackTrace();
