@@ -8,6 +8,8 @@
     <input name="uploadFiles" type="file" multiple />
     <button class="uploadBtn">Upload</button>
 
+    <div class="uploadResult"></div>
+
     <script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -33,11 +35,47 @@
           type: "POST",
           dataType: "json",
           success: function (result) {
-            console.log(result);
+            console.log("응답 성공", result);
+            showUploadedImages(result);
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
           },
+        });
+      });
+
+      function showUploadedImages(images) {
+        console.log(images);
+
+        const divArea = $(".uploadResult");
+
+        const createImgElement = (thumbUrl, imgOriginUrl) => {
+          return `
+            <div>
+              <img src='/display?fileName=${thumbUrl}'>
+              <button class='removeBtn' data-name='${imgOriginUrl}'>REMOVE</button>
+            </div>
+          `;
+        };
+
+        for (const img of images) {
+          divArea.append(createImgElement(img.thumbnailURL, img.imageURL));
+        }
+      }
+
+      $(".uploadResult").on("click", ".removeBtn", function () {
+        const target = $(this);
+        const fileName = target.data("name");
+        const targetDiv = $(this).closest("div");
+
+        console.log("ToRemoveFileName", fileName);
+
+        $.post("/removeFile", { fileName }, function (result) {
+          console.log(result);
+
+          if (result) {
+            targetDiv.remove();
+          }
         });
       });
     </script>
