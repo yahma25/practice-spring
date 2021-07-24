@@ -49,10 +49,35 @@
 
         const divArea = $(".uploadResult");
 
+        const createImgElement = (thumbUrl, imgOriginUrl) => {
+          return `
+            <div>
+              <img src='/display?fileName=${thumbUrl}'>
+              <button class='removeBtn' data-name='${imgOriginUrl}'>REMOVE</button>
+            </div>
+          `;
+        };
+
         for (const img of images) {
-          divArea.append(`<img src='/display?fileName=${img.thumbnailURL}'>`);
+          divArea.append(createImgElement(img.thumbnailURL, img.imageURL));
         }
       }
+
+      $(".uploadResult").on("click", ".removeBtn", function () {
+        const target = $(this);
+        const fileName = target.data("name");
+        const targetDiv = $(this).closest("div");
+
+        console.log("ToRemoveFileName", fileName);
+
+        $.post("/removeFile", { fileName }, function (result) {
+          console.log(result);
+
+          if (result) {
+            targetDiv.remove();
+          }
+        });
+      });
     </script>
   </body>
 </html>
