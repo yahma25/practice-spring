@@ -27,6 +27,66 @@
       <script>
         $(document).ready(function() {
 
+          const regex = new RegExp('(.*?)\.(exe|sh|zip|alz|tiff)$');
+          const maxSize = 10485760; // 10MB
+
+          function checkExtension(fileName, fileSize) {
+            if (fileSize >= maxSize) {
+              alert('파일 사이즈 초과');
+              return false;
+            }
+
+            if (regex.test(fileName)) {
+              alert('해당 종류의 파일은 업로드할 수 없습니다');
+              return false;
+            }
+
+            return true;
+          }
+
+          $('.custom-file-input').on('change', function() {
+            const fileName = $(this).val().split('\\').pop();
+            $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+
+            const formData = new FormData();
+            const inputFile = $(this);
+            const files = inputFile[0].files;
+
+            let appended = false;
+
+            for (const file of files) {
+              if (!checkExtension(file.name, file.size)) {
+                return false;
+              }
+
+              console.log(file);
+
+              formData.append('uploadFiles', file);
+              appended = true;
+            }
+
+            if (!appended) return;
+
+            for (const value of formData.values()) {
+              console.log('value', value);
+            }
+
+            // 업로드
+            $.ajax({
+              url: '/uploadAjax',
+              processData: false,
+              contentType: false,
+              data: formData,
+              type: 'POST',
+              dataType: 'json',
+              success: function(result) {
+                console.log('success', result);
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+              }
+            });
+          });
         });
       </script>
 
