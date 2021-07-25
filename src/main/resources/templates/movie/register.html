@@ -24,6 +24,39 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 
+      <style>
+        .uploadResult {
+          width: 100%;
+          background-color: gray;
+          margin-top: 10px;
+        }
+
+        .uploadResult ul {
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+          align-items: center;
+          vertical-align: top;
+          overflow: auto;
+        }
+
+        .uploadResult ul li {
+          list-style: none;
+          padding: 10px;
+          margin-left: 2em;
+        }
+
+        .uploadResult ul li img {
+          width: 100px;
+        }
+      </style>
+
+      <div class="uploadResult">
+        <ul>
+
+        </ul>
+      </div>
+
       <script>
         $(document).ready(function() {
 
@@ -81,6 +114,7 @@
               dataType: 'json',
               success: function(result) {
                 console.log('success', result);
+                showResult(result);
               },
               error: function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -88,6 +122,24 @@
             });
           });
         });
+
+        function showResult(uploadResultArr) {
+          let str;
+          $(uploadResultArr).each(function(i, obj) {
+            str = `
+              <li data-name='${obj.fileName}' data-path='${obj.folderPath}' data-uuid='${obj.uuid}'>
+                <div>
+                  <button type='button' data-file='${obj.imageURL}' class='btn-warning btn-sm'>X</button>
+                  <br/>
+                  <img src='/display?fileName=${obj.thumbnailURL}'>
+                </div>
+              </li>
+            `;
+
+            const uploadUl = $('.uploadResult ul');
+            uploadUl.append(str);
+          });
+        }
       </script>
 
     </th:block>
