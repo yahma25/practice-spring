@@ -1,4 +1,4 @@
-package com.yahma.movie_review.entity.review;
+package com.yahma.movie_review.entity.movie;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.yahma.movie_review.entity.BaseEntity;
+import com.yahma.movie_review.entity.review.MemberForReview;
+import com.yahma.movie_review.entity.review.Movie;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +24,7 @@ import lombok.ToString;
 @Getter
 @ToString(exclude = {"movie", "memberForReview"})
 public class Review extends BaseEntity {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewnum;
@@ -35,4 +38,12 @@ public class Review extends BaseEntity {
     private int grade;
 
     private String text;
+
+    public void changeGrade(int grade) {
+        this.grade = grade;
+    }
+
+    public void changeText(String text) {
+        this.text = text;
+    }
 }
