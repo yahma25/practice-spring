@@ -234,7 +234,35 @@
                     $(`.starrr a:nth-child(${grade})`).trigger('click');
                     $('.reviewModal').modal('show');
                 });
+
+                // 리뷰 수정
+                $('.modifyBtn').on('click', function() {
+    
+                    const data = {
+                        reviewnum,
+                        mno,
+                        grade,
+                        text: inputText.val(),
+                        mid: inputMid.val()
+                    };
+    
+                    console.log('수정하려고 하는 데이터', data);
+    
+                    $.ajax({
+                        url: `/reviews/${mno}/${reviewnum}`,
+                        type: 'PUT',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'text',
+                        success: function(result) {
+                            console.log('수정 성공:', result);
+                            self.location.reload();
+                        }
+                    });
+                    reviewModal.modal('hide');
+                });
             });
+
         </script>
 
     </th:block>
