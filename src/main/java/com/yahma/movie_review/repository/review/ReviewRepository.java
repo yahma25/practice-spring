@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.yahma.movie_review.entity.review.MemberForReview;
 import com.yahma.movie_review.entity.review.Movie;
-import com.yahma.movie_review.entity.review.Review;
+import com.yahma.movie_review.entity.movie.Review;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
