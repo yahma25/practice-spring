@@ -140,6 +140,24 @@
             uploadUl.append(str);
           });
         }
+
+        $('.uploadResult').on('click', 'li button', function() {
+          console.log('delete file');
+
+          const targetFile = $(this).data('file');
+          const targetLi = $(this).closest('li');
+
+          $.ajax({
+            url: '/removeFile',
+            data: {fileName: targetFile},
+            dataType: 'text',
+            type: 'POST',
+            success: function (result) {
+              alert(result);
+              targetLi.remove();
+            }
+          })
+        });
       </script>
 
     </th:block>
