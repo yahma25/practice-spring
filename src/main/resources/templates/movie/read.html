@@ -184,7 +184,35 @@
                     });
 
                     reviewModal.modal('hide');
-                })
+                });
+
+                function getMovieReviews() {
+                    
+                    function formatTime(str) {
+                        const date = new Date(str);
+
+                        return `${date.getFullYear()}/${(date.getMonth() + 1)}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}`;
+                    }
+
+                    $.getJSON(`/reviews/${mno}/all`, function (arr) {
+                        let str = '';
+
+                        $.each(arr, function (idx, review) {
+                            console.log('review', review);
+
+                            str += `
+                                <div class='card-body' data-reviewnum=${review.reviewnum} data-mid=${review.mid}>
+                                    <h5 class='card-title'>${review.text} <span>${review.grade}</span></h5>
+                                    <h6 class='card-subtitle mb-2 text-muted'>${review.nickname}</h6>
+                                    <p class='card-text'>${formatTime(review.regDate)}</p>
+                                </div>
+                            `;
+                            $('.reviewList').html(str);
+                        });
+                    });
+                }
+
+                getMovieReviews();
             });
         </script>
 
