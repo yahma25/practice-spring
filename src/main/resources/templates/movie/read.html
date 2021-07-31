@@ -157,8 +157,33 @@
 
                     $('.removeBtn, .modifyBtn').hide();
                     $('.reviewSaveBtn').show();
-                    
+
                     $('.reviewModal').modal('show');
+                });
+
+                $('.reviewSaveBtn').click(function () {
+                    const data = {
+                        mno,
+                        grade,
+                        text: inputText.val(),
+                        mid: inputMid.val()
+                    };
+
+                    console.log('리뷰 등록 데이터', data);
+
+                    $.ajax({
+                        url: '/reviews/' + mno,
+                        type: 'POST',
+                        data: JSON.stringify(data),
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'text',
+                        success: function (result) {
+                            console.log('result', result);
+                            self.location.reload();
+                        }
+                    });
+
+                    reviewModal.modal('hide');
                 })
             });
         </script>
