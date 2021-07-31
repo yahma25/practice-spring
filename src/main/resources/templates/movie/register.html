@@ -158,6 +158,26 @@
             }
           })
         });
+
+        $('.btn-primary').on('click', function (e) {
+          e.preventDefault();
+
+          let str = '';
+
+          $('.uploadResult li').each(function (i, obj) {
+            const target = $(obj);
+
+            str += `
+              <input type='hidden' name='imageDTOList[${i}].imgName' value='${target.data('name')}'>
+              <input type='hidden' name='imageDTOList[${i}].path' value='${target.data('path')}'>
+              <input type='hidden' name='imageDTOList[${i}].uuid' value='${target.data('uuid')}'>
+            `;
+          });
+
+          $('.box').html(str);
+
+          $('form').submit();
+        });
       </script>
 
     </th:block>
