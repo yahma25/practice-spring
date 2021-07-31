@@ -1,4 +1,4 @@
-# Spring Boot 학습용 저장소
+# Spring Boot 학습용 저장소 (Clone 코딩)
 
 ## 이 저장소를 만든 이유
 
