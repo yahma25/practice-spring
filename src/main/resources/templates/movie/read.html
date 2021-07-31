@@ -261,6 +261,24 @@
                     });
                     reviewModal.modal('hide');
                 });
+
+                // 리뷰 삭제
+                $('.removeBtn').on('click', function() {
+
+                    const data = {reviewnum};
+
+                    $.ajax({
+                        url: `/reviews/${mno}/${reviewnum}`,
+                        type: 'DELETE',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'text',
+                        success: function(result) {
+                            console.log('삭제 성공:', result);
+                            self.location.reload();
+                        }
+                    });
+                    reviewModal.modal('hide');
+                });
             });
 
         </script>
