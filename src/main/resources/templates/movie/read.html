@@ -147,7 +147,19 @@
                     }
                 })
 
-                $('.reviewModal').modal('show');
+                const reviewModal = $('.reviewModal');
+                const inputMid = $('input[name="mid"]');
+                const inputText = $('input[name="text"]');
+
+                $('.addReviewBtn').click(function () {
+                    inputMid.val('');
+                    inputText.val('');
+
+                    $('.removeBtn, .modifyBtn').hide();
+                    $('.reviewSaveBtn').show();
+                    
+                    $('.reviewModal').modal('show');
+                })
             });
         </script>
 
