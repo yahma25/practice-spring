@@ -7,12 +7,38 @@ import java.util.stream.Collectors;
 
 import com.yahma.movie_review.dto.movie.MovieDTO;
 import com.yahma.movie_review.dto.movie.MovieImageDTO;
+import com.yahma.movie_review.dto.PageRequestDTO;
+import com.yahma.movie_review.dto.PageResultDTO;
 import com.yahma.movie_review.entity.review.Movie;
 import com.yahma.movie_review.entity.review.MovieImage;
 
 public interface MovieService {
     
     Long register(MovieDTO movieDTO);
+
+    PageResultDTO<MovieDTO, Object[]> getList(PageRequestDTO requestDTO);
+
+    default MovieDTO entitiesToDTO(Movie movie, List<MovieImage> movieImages, Double avg, Long reviewCount) {
+        MovieDTO movieDTO = MovieDTO.builder()
+                .mno(movie.getMno())
+                .title(movie.getTitle())
+                .regDate(movie.getRegDate())
+                .modDate(movie.getModDate())
+                .build();
+
+        List<MovieImageDTO> movieImageDTOList = movieImages.stream().map(movieImage -> {
+            return MovieImageDTO.builder().imgName(movieImage.getImgName())
+                    .path(movieImage.getPath())
+                    .uuid(movieImage.getUuid())
+                    .build();
+        }).collect(Collectors.toList());
+
+        movieDTO.setImageDTOList(movieImageDTOList);
+        movieDTO.setAvg(avg);
+        movieDTO.setReviewCount(reviewCount.intValue());
+
+        return movieDTO;
+    }
 
     default Map<String, Object> dtoToEntity(MovieDTO movieDTO) {
 
