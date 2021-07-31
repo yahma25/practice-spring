@@ -61,9 +61,87 @@
             <span class="badge badge-light">[[${dto.reviewCount}]]</span>
         </button>
 
+        <div class="reviewModal modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Movie Review</h5>
+    
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Reviewer ID</label>
+                            <input type="text" class="form-control" name="mid">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Grade <span class="grade"></span></label>
+                            <div class="starrr"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Reviewer Text</label>
+                            <input type="text" class="form-control" name="text" placeholder="Good Movie!">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary reviewSaveBtn">Save changes</button>
+                            <button type="button" class="btn btn-warning modifyBtn">Modify</button>
+                            <button type="button" class="btn btn-danger removeBtn">Remove</button>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="imageModal modal" tabindex="-2" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Picture</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/starrr.js}"></script>
+        <link th:href="@{/css/starrr.css}" rel="stylesheet">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+
         <script>
             $(document).ready(function () {
 
+                let grade = 0;
+                const mno = [[${dto.mno}]]
+
+                $('.starrr').starrr({
+                    rating: grade,
+                    change: function (e, value) {
+                        if (!value) return;
+                        console.log('value', value);
+                        grade = value;
+                    }
+                })
+
+                $('.reviewModal').modal('show');
             });
         </script>
 
