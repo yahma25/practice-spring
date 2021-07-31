@@ -140,6 +140,44 @@
             uploadUl.append(str);
           });
         }
+
+        $('.uploadResult').on('click', 'li button', function() {
+          console.log('delete file');
+
+          const targetFile = $(this).data('file');
+          const targetLi = $(this).closest('li');
+
+          $.ajax({
+            url: '/removeFile',
+            data: {fileName: targetFile},
+            dataType: 'text',
+            type: 'POST',
+            success: function (result) {
+              alert(result);
+              targetLi.remove();
+            }
+          })
+        });
+
+        $('.btn-primary').on('click', function (e) {
+          e.preventDefault();
+
+          let str = '';
+
+          $('.uploadResult li').each(function (i, obj) {
+            const target = $(obj);
+
+            str += `
+              <input type='hidden' name='imageDTOList[${i}].imgName' value='${target.data('name')}'>
+              <input type='hidden' name='imageDTOList[${i}].path' value='${target.data('path')}'>
+              <input type='hidden' name='imageDTOList[${i}].uuid' value='${target.data('uuid')}'>
+            `;
+          });
+
+          $('.box').html(str);
+
+          $('form').submit();
+        });
       </script>
 
     </th:block>
